@@ -8,12 +8,15 @@ import {
   NavbarItem,
 } from "@heroui/navbar";
 import { Button } from "@heroui/button";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import Logo from "../../assets/icons/logo.png";
 
 export default function NavBar() {
   const menuItems = ["Table", "List"];
+  const location = useLocation();
+  const isTable = location.pathname === "/table";
+  const isList = location.pathname === "/";
 
   return (
     <Navbar disableAnimation isBordered>
@@ -31,13 +34,13 @@ export default function NavBar() {
         <NavbarBrand>
           <img alt="Logo" className="h-8" src={Logo} />
         </NavbarBrand>
-        <NavbarItem>
-          <Link color="foreground" to="#">
+        <NavbarItem isActive={isTable}>
+          <Link color="foreground" to="/table">
             Table
           </Link>
         </NavbarItem>
-        <NavbarItem isActive>
-          <Link aria-current="page" color="warning" to="#">
+        <NavbarItem isActive={isList}>
+          <Link aria-current="page" color="warning" to="/">
             List
           </Link>
         </NavbarItem>
