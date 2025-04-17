@@ -8,8 +8,8 @@ import {
 } from "@heroui/modal";
 import { Button } from "@heroui/button";
 
-import { MemeForm } from "../MemeForm/MemeForm";
-import { ErrorNotification } from "../ErrorNotification/ErrorNotification";
+import { MemeForm } from "../MemeForm";
+import { ErrorNotification } from "../ErrorNotification";
 
 import { Meme } from "@/types/Meme";
 import { validateMeme } from "@/utils/validate";

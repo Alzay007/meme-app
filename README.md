@@ -1,8 +1,11 @@
-# Vite & HeroUI Template
+React Memes App
 
-This is a template for creating applications using Vite and HeroUI (v2).
+This is a meme management application built with React, allowing users to view and edit memes. The data is saved locally in localStorage, so it persists even after page reloads.
 
-[Try it on CodeSandbox](https://githubbox.com/frontio-ai/vite-template)
+## Preview
+
+[**🔗Click here!**](https://meme-app-production-facf.up.railway.app/)
+
 
 ## Technologies Used
 
@@ -13,13 +16,20 @@ This is a template for creating applications using Vite and HeroUI (v2).
 - [TypeScript](https://www.typescriptlang.org)
 - [Framer Motion](https://www.framer.com/motion)
 
+## Features
+
+- View memes: Users can view a list of all memes with their title and like counts.
+
+- Edit memes: Each meme can be edited (e.g., changing its title).
+
+- Save data: All changes are automatically saved to localStorage so the data persists across page reloads.
+
 ## How to Use
 
 To clone the project, run the following command:
 
 ```bash
-git clone https://github.com/frontio-ai/vite-template.git
-```
+git clone git@github.com:Alzay007/meme-app.git
 
 ### Install dependencies
 
@@ -34,17 +44,3 @@ npm install
 ```bash
 npm run dev
 ```
-
-### Setup pnpm (optional)
-
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
-
-```bash
-public-hoist-pattern[]=*@heroui/*
-```
-
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
-
-## License
-
-Licensed under the [MIT license](https://github.com/frontio-ai/vite-template/blob/main/LICENSE).

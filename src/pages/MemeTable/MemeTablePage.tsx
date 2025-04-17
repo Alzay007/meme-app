@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
   Table,
   TableBody,
@@ -9,7 +9,7 @@ import {
 } from "@heroui/table";
 import { Button } from "@heroui/button";
 
-import { EditModal } from "@/components/EditModal/EditModal";
+import { EditModal } from "@/components/EditModal";
 import { Meme } from "@/types/Meme";
 
 interface MemeTableProps {
@@ -31,14 +31,17 @@ export const MemeTable: React.FC<MemeTableProps> = ({ memes, setMemes }) => {
     setCurrentMeme(null);
   };
 
-  const handleSaveChanges = (updatedMeme: Meme) => {
-    setMemes((prevMemes) =>
-      prevMemes.map((meme) =>
-        meme.id === updatedMeme.id ? updatedMeme : meme,
-      ),
-    );
-    handleModalClose();
-  };
+  const handleSaveChanges = useCallback(
+    (updatedMeme: Meme) => {
+      setMemes((prevMemes) =>
+        prevMemes.map((meme) =>
+          meme.id === updatedMeme.id ? updatedMeme : meme,
+        ),
+      );
+      handleModalClose();
+    },
+    [setMemes],
+  );
 
   return (
     <div className="w-full max-w-[1200px] mx-auto px-6 sm:px-8 md:px-10 lg:px-4 py-8">

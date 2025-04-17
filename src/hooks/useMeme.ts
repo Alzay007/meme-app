@@ -49,10 +49,15 @@ export const useMemes = () => {
   }, []);
 
   useEffect(() => {
-    if (!isLoading) {
-      localStorage.setItem("memes", JSON.stringify(memes));
+    if (!isLoading && memes.length > 0) {
+      const currentMemes = localStorage.getItem("memes");
+      const memesChanged = currentMemes !== JSON.stringify(memes);
+
+      if (memesChanged) {
+        localStorage.setItem("memes", JSON.stringify(memes));
+      }
     }
-  }, [memes, isLoading]);
+  }, [isLoading, memes]);
 
   return { memes, setMemes, isLoading };
 };

@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { NavBar } from "./components/Navbar";
-import { MemeList } from "./pages/MemeList/MemeListPage";
-import { MemeTable } from "./pages/MemeTable/MemeTablePage";
+import { MemeList } from "./pages/MemeList";
+import { MemeTable } from "./pages/MemeTable";
 import { Loader } from "./components/Loader";
 import { useMemes } from "./hooks/useMeme";
 
