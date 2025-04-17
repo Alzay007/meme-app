@@ -1,9 +1,18 @@
-import { useState, ChangeEvent } from "react";
-import { Modal } from "@heroui/modal";
+import { useState, useEffect } from "react";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "@heroui/modal";
 import { Button } from "@heroui/button";
-import { Input } from "@heroui/input";
+
+import { MemeForm } from "../MemeForm/MemeForm";
+import { ErrorNotification } from "../ErrorNotification/ErrorNotification";
 
 import { Meme } from "@/types/Meme";
+import { validateMeme } from "@/utils/validate";
 
 interface EditMemeModalProps {
   isOpen: boolean;
@@ -19,69 +28,48 @@ export const EditModal: React.FC<EditMemeModalProps> = ({
   onClose,
 }) => {
   const [updatedMeme, setUpdatedMeme] = useState<Meme | null>(meme);
+  const [error, setError] = useState<string>("");
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (updatedMeme) {
-      setUpdatedMeme({
-        ...updatedMeme,
-        [e.target.name]: e.target.value,
-      });
-    }
-  };
+  useEffect(() => {
+    setUpdatedMeme(meme);
+  }, [meme]);
 
   const handleSave = () => {
-    if (updatedMeme) {
-      onSave(updatedMeme);
+    if (!updatedMeme) return;
+
+    const errors = validateMeme(updatedMeme);
+
+    if (errors.length > 0) {
+      setError(errors.join(" "));
+
+      return;
     }
+
+    onSave(updatedMeme);
+    setError("");
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <h3 className="text-xl font-bold mb-4">Редактировать мем</h3>
-      {updatedMeme && (
-        <>
-          <div className="mb-4">
-            <label className="block" htmlFor="title">
-              Title
-            </label>
-            <Input
-              id="title"
-              name="title"
-              value={updatedMeme.title}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block" htmlFor="image">
-              Image
-            </label>
-            <Input
-              id="image"
-              name="image"
-              value={updatedMeme.image}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block" htmlFor="likes">
-              Likes
-            </label>
-            <Input
-              id="likes"
-              name="likes"
-              type="number"
-              value={String(updatedMeme.likes)}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="flex justify-end gap-2">
-            <Button onClick={onClose}>Отменить</Button>
-            <Button color="primary" onPress={handleSave}>
-              Save
-            </Button>
-          </div>
-        </>
-      )}
+    <Modal isOpen={isOpen} placement="center" onClose={onClose}>
+      <ModalContent>
+        <ModalHeader className="text-xl font-bold">Update Meme</ModalHeader>
+        <ModalBody>
+          {updatedMeme && (
+            <>
+              <MemeForm meme={updatedMeme} onChange={setUpdatedMeme} />
+              {error && <ErrorNotification message={error} />}
+            </>
+          )}
+        </ModalBody>
+        <ModalFooter>
+          <Button variant="light" onPress={onClose}>
+            Cancel
+          </Button>
+          <Button color="primary" onPress={handleSave}>
+            Save
+          </Button>
+        </ModalFooter>
+      </ModalContent>
     </Modal>
   );
 };

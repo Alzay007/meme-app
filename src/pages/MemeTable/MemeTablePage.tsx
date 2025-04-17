@@ -11,10 +11,13 @@ import { Button } from "@heroui/button";
 
 import { EditModal } from "@/components/EditModal/EditModal";
 import { Meme } from "@/types/Meme";
-import { memes as initialMemes } from "@/data/memes";
 
-export const MemeTable = () => {
-  const [memes, setMemes] = useState<Meme[]>(initialMemes);
+interface MemeTableProps {
+  memes: Meme[];
+  setMemes: React.Dispatch<React.SetStateAction<Meme[]>>;
+}
+
+export const MemeTable: React.FC<MemeTableProps> = ({ memes, setMemes }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentMeme, setCurrentMeme] = useState<Meme | null>(null);
 
@@ -39,7 +42,7 @@ export const MemeTable = () => {
 
   return (
     <div className="w-full max-w-[1200px] mx-auto px-6 sm:px-8 md:px-10 lg:px-4 py-8">
-      <Table>
+      <Table aria-label="list of memes">
         <TableHeader>
           <TableColumn>Id</TableColumn>
           <TableColumn>Title</TableColumn>
